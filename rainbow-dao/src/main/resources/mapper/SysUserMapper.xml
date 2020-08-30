@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.rainbow.mapper.SysUserMapper">
+
+    <!--<resultMap id="MyUserDetails" type="org.rainbow.beans.entity.MyUserDetails">-->
+    <!--    <result property="loginName" column="login_name"/>-->
+    <!--    <result property="password" column="password"/>-->
+    <!--    <result property="status" column="status"/>-->
+    <!--</resultMap>-->
+
+    <!--<select id="findByLoginName" resultMap="MyUserDetails">-->
+    <!--    select * from sys_user-->
+    <!--    where login_name=#{loginName,jdbcType=VARCHAR}-->
+    <!--    or email=#{loginName,jdbcType=VARCHAR}-->
+    <!--</select>-->
+
+    <select id="findRoleByLoginName" resultType="java.lang.String">
+        select role_code from sys_role sr
+        inner join sys_user_role sur on sr.id=sur.role_id
+        inner join sys_user su on sur.user_id=su.id
+        where login_name=#{loginName,jdbcType=VARCHAR}
+        or email=#{loginName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAuthorityByRoleCodes" resultType="java.lang.String">
+        select url from sys_menu sm
+        left join sys_role_menu srm on sm.id=srm.menu_id
+        left join sys_role sr on srm.role_id=sr.id
+        where role_code in
+        <foreach collection='roleCodes' item='roleCode' open='(' separator=',' close=')'>
+            #{roleCode,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="findPermissionsByLoginName" resultType="java.lang.String">
+        select distinct(sm.perms)
+        from sys_menu sm
+                 inner join sys_role_menu srm on sm.id = srm.menu_id
+                 inner join sys_role sr on srm.role_id = sr.id
+                 inner join sys_user_role sur on sr.id = sur.role_id
+                 inner join sys_user su on sur.user_id = su.id
+        where su.login_name = #{loginName,jdbcType=VARCHAR} or email = #{loginName,jdbcType=VARCHAR}
+    </select>
+</mapper>

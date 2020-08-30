@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: rainbow-web
+  # 时间出参格式
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd
+  # 时间入参格式
+  mvc:
+    format:
+      date-time: yyyy-MM-dd
+  boot:
+    admin:
+      client:
+        url: http://175.24.11.117:8080/rainbow-actuator
+        username: root
+        password: lh@686...
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+# 自定义jwt key
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mySecret #JWT加解密使用的密钥
+  expiration: 604800 #JWT的超期限时间(60*60*24)
+  tokenHead: Bearer  #JWT负载中拿到开头
