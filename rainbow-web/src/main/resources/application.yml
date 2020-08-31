@@ -33,3 +33,10 @@ jwt:
   secret: mySecret #JWT加解密使用的密钥
   expiration: 604800 #JWT的超期限时间(60*60*24)
   tokenHead: Bearer  #JWT负载中拿到开头
+
+# 文件管理系统
+minio:
+  url: http://175.24.11.117:9090 # minio 服务地址
+  accessKey: minioadmin # 账号
+  secretKey: minioadmin # 密码
+  bucketName: ${spring.application.name} # 桶名称
