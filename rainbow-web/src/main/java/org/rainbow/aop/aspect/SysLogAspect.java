@@ -51,14 +51,48 @@ public class SysLogAspect {
     //     return result;
     // }
 
+    /**
+     * 添加service层日志AOP
+     *
+     * @param point
+     * @return
+     * @throws Throwable
+     */
+    @Around("execution(* org.rainbow.service.impl.*.* (..))")
+    public Object serviceAround(ProceedingJoinPoint point) throws Throwable {
+        log.info("===开始执行{}.{}方法===", point.getTarget().getClass(), point.getSignature().getName());
+        long beginTime = System.currentTimeMillis();
+        // 执行方法
+        Object result = point.proceed();
+        // 执行时长(毫秒)
+        long time = System.currentTimeMillis() - beginTime;
+        // 输入日志
+        if (time > 120000) {
+            log.error("===执行结束,耗时{}毫秒===", time);
+        } else if (time > 60000) {
+            log.warn("===执行结束,耗时{}毫秒===", time);
+        } else {
+            log.info("===执行结束,耗时{}毫秒===", time);
+        }
+
+        return result;
+    }
+
+    /**
+     * 登陆日志AOP
+     *
+     * @param point
+     * @return
+     * @throws Throwable
+     */
     @Around("execution(* org.rainbow.controller.AdminController.login(..))")
     public Object controllerAround(ProceedingJoinPoint point) throws Throwable {
         long beginTime = System.currentTimeMillis();
-        //执行方法
+        // 执行方法
         Object result = point.proceed();
-        //执行时长(毫秒)
+        // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
-        //保存日志
+        // 保存日志
         try {
             saveSysLog(time);
         } catch (Exception e) {

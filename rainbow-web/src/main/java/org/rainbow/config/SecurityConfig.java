@@ -76,14 +76,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js",
                         "/swagger-resources/**",
-                        "/v2/api-docs/**")
-                .permitAll()
-                .antMatchers("/admin/**","/actuator/**")// 对登录注册要允许匿名访问
-                .permitAll()
-                .antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
-                .permitAll()
-//                .antMatchers("/**")//测试时全部运行访问
-//                .permitAll()
+                        "/v2/api-docs/**").permitAll()
+                // 放行不需要验证的接口
+                .antMatchers("/admin/**", "/actuator/**", "/captcha/**", "/druid/**").permitAll()
+                //跨域请求会先进行一次options请求
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                // .antMatchers("/**")//测试时全部运行访问
+                // .permitAll()
                 .anyRequest()// 除上面外的所有请求全部需要鉴权认证
                 .authenticated();
 

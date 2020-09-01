@@ -14,9 +14,13 @@ spring:
   boot:
     admin:
       client:
-        url: http://175.24.11.117:8080/rainbow-actuator
-        username: root
-        password: lh@686...
+        url: http://ENC(qvo9Fu8+aKZM6oL5L7HeMvJmF9Z5iJfbHUhdsMBxLVCNUDi06nwayc8/45xg1oTt):8080/rainbow-actuator
+        username: ENC(cL0BKl6Ey6X0jfC88sQcACs6JKNXKCeSpsABv2ur9Yy0kloRSPa16K4BMesQKXFS)
+        password: ENC(F890hnHIv8YmxJkQQ/S4KzRo2wfShJH+9YNXGyED8YjOuoHbVDyBm1mzUvhoW7Cs)
+  servlet:
+    multipart:
+      enabled: true # 开启文件上传
+      max-file-size: 10MB # 限制最大文件
 
 management:
   endpoints:
@@ -36,7 +40,17 @@ jwt:
 
 # 文件管理系统
 minio:
-  url: http://175.24.11.117:9090 # minio 服务地址
-  accessKey: minioadmin # 账号
-  secretKey: minioadmin # 密码
+  url: http://ENC(qvo9Fu8+aKZM6oL5L7HeMvJmF9Z5iJfbHUhdsMBxLVCNUDi06nwayc8/45xg1oTt):9090 # minio 服务地址
+  accessKey: ENC(WHazqLRMdBqVPAGvi6LtaN43f+04tnHGhILxjDw5BCkX1TIkMpixjwtxOPM54/uW) # 账号
+  secretKey: ENC(WHazqLRMdBqVPAGvi6LtaN43f+04tnHGhILxjDw5BCkX1TIkMpixjwtxOPM54/uW) # 密码
   bucketName: ${spring.application.name} # 桶名称
+
+# 验证码设置
+aj:
+  captcha:
+    type: default
+    water-mark: &#114;&#97;&#105;&#110;&#98;&#111;&#119;&#45;&#119;&#101;&#98
+    jigsaw: classpath:images/jigsaw
+    pic-click: classpath:images/pic-click
+    interference-options: 1
+    cache-type: redis
