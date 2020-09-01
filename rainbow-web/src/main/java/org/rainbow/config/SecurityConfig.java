@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/**",
                         "/v2/api-docs/**").permitAll()
                 // 放行不需要验证的接口
-                .antMatchers("/admin/**", "/actuator/**", "/captcha/**", "/druid/**").permitAll()
+                .antMatchers("/admin/**", "/actuator/**", "/captcha/**").permitAll()
                 //跨域请求会先进行一次options请求
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 // .antMatchers("/**")//测试时全部运行访问
