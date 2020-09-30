@@ -1,7 +1,9 @@
 package org.rainbow.service;
 
+import org.rainbow.beans.dto.LoginSuccess;
 import org.rainbow.beans.entity.SysMenu;
 import org.rainbow.beans.entity.SysUser;
+import org.rainbow.beans.vo.LoginForm;
 
 import java.util.List;
 
@@ -32,11 +34,10 @@ public interface SysUserService {
     /**
      * 登陆
      *
-     * @param loginName
-     * @param password
+     * @param loginForm
      * @return
      */
-    String userLogin(String loginName, String password);
+    LoginSuccess userLogin(LoginForm loginForm);
 
     /**
      * 根据用户ID查询菜单

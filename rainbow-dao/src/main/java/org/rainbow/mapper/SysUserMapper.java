@@ -21,13 +21,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     List<String> findRoleByLoginName(@Param("loginName") String loginName);
 
-    /**
-     * 根据用户角色查询用户权限
-     *
-     * @param roleCodes
-     * @return
-     */
-    List<String> findAuthorityByRoleCodes(@Param("roleCodes") List<String> roleCodes);
 
     Set<String> findPermissionsByLoginName(@Param("loginName") String loginName);
 }

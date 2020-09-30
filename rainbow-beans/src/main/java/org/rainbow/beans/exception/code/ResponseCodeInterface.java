@@ -1,12 +1,12 @@
-package org.rainbow.exception.code;
+package org.rainbow.beans.exception.code;
 
 /**
  * @author lihao3
- * @Date 2020/9/1 10:09
+ * @Date 2020/9/4 13:41
  */
 public interface ResponseCodeInterface {
 
-    int getCode();
+    String getCode();
 
     String getMsg();
 }

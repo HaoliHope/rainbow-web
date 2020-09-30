@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "菜单表对应实体类")
 @Data
@@ -36,7 +37,7 @@ public class SysMenu implements Serializable {
      * 菜单顺序
      */
     @ApiModelProperty(value = "菜单顺序")
-    private Integer order;
+    private Integer menuOrder;
 
     /**
      * 权限标识
@@ -54,7 +55,7 @@ public class SysMenu implements Serializable {
      * 菜单状态（0隐藏 1显示）
      */
     @ApiModelProperty(value = "菜单状态（0隐藏 1显示）")
-    private Integer visible;
+    private Integer menuStatus;
 
     /**
      * 菜单类型（0目录 1菜单 2按钮）
@@ -72,7 +73,7 @@ public class SysMenu implements Serializable {
      * 菜单描述
      */
     @ApiModelProperty(value = "菜单描述")
-    private String description;
+    private String remark;
 
     /**
      * 创建人
@@ -101,6 +102,10 @@ public class SysMenu implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "修改时间")
     private Date updateTime;
+
+    @ApiModelProperty("子级节点")
+    @TableField(exist = false)
+    private List<SysMenu> children;
 
     private static final long serialVersionUID = 1L;
 }

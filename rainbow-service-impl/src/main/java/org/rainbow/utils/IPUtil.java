@@ -50,7 +50,6 @@ public class IPUtil {
                 ip = ip.substring(0, ip.indexOf(","));
             }
         }
-
         return ip;
     }
 

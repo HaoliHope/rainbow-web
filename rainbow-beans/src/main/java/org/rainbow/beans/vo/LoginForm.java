@@ -3,7 +3,7 @@ package org.rainbow.beans.vo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 登录VO对象
@@ -15,10 +15,18 @@ import javax.validation.constraints.NotEmpty;
 public class LoginForm {
 
     @ApiModelProperty(value = "用户名", required = true)
-    @NotEmpty(message = "用户名不能为空")
+    @NotNull(message = "用户名不能为空")
     private String loginName;
 
     @ApiModelProperty(value = "密码", required = true)
-    @NotEmpty(message = "密码不能为空")
+    @NotNull(message = "密码不能为空")
     private String password;
+
+    @ApiModelProperty(value = "验证码", required = true)
+    @NotNull(message = "验证码不能为空")
+    private String verKey;
+
+    @ApiModelProperty(value = "验证码", required = true)
+    @NotNull(message = "验证码不能为空")
+    private String verCode;
 }

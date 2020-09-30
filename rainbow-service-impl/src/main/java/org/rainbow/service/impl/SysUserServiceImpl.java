@@ -1,82 +1,60 @@
 package org.rainbow.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.rainbow.beans.dto.LoginSuccess;
 import org.rainbow.beans.entity.SysMenu;
 import org.rainbow.beans.entity.SysUser;
+import org.rainbow.beans.exception.BusinessException;
+import org.rainbow.beans.exception.code.BaseResponseCode;
+import org.rainbow.beans.vo.LoginForm;
 import org.rainbow.mapper.SysMenuMapper;
+import org.rainbow.mapper.SysRoleMapper;
 import org.rainbow.mapper.SysUserMapper;
 import org.rainbow.service.SysUserService;
-import org.rainbow.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author lihao3
- * @Date 2020/8/30 11:52
+ * @Date 2020/9/29 14:30
  */
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
-    @Value("${jwt.tokenHead}")
-    private String tokenHead;
-
     @Autowired
-    private UserDetailsService userDetailsService;
+    SysUserMapper sysUserMapper;
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    SysRoleMapper sysRoleMapper;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private SysUserMapper sysUserMapper;
-    @Autowired
-    private SysMenuMapper sysMenuMapper;
+    SysMenuMapper sysMenuMapper;
 
     @Override
     public SysUser getUserByLoginName(String loginName) {
-        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(SysUser::getLoginName, loginName);
-        return sysUserMapper.selectOne(wrapper);
+        return null;
     }
 
     @Override
     public SysUser userRegister(SysUser sysUser) {
-        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(SysUser::getLoginName, sysUser.getLoginName());
-        // 查询是否有重复的用户名
-        Integer count = sysUserMapper.selectCount(wrapper);
-        if (count > 1) {
-            throw new RuntimeException("此用户名已经注册！");
-        } else {
-            // 将密码加密
-            String encodePassword = passwordEncoder.encode(sysUser.getPassword());
-            sysUser.setPassword(encodePassword);
-            sysUserMapper.insert(sysUser);
-            return sysUser;
-        }
+        return null;
     }
 
     @Override
-    public String userLogin(String loginName, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginName);
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("账号或密码不正确");
+    public LoginSuccess userLogin(LoginForm loginForm) {
+        QueryWrapper<SysUser> sysUserQueryWrapper = new QueryWrapper<>();
+        sysUserQueryWrapper.lambda().eq(SysUser::getLoginName,loginForm.getLoginName()).or()
+                .eq(SysUser::getEmail,loginForm.getLoginName());
+        SysUser sysUser = sysUserMapper.selectOne(sysUserQueryWrapper);
+        if (sysUser==null) {
+            throw new BusinessException(BaseResponseCode.LOGIN_ERROR);
         }
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenUtil.generateToken(userDetails);
+
+        return null;
     }
 
     @Override
     public List<SysMenu> getMenuList(Long userId) {
-        return sysMenuMapper.selectMenuByUserId(userId);
+        return null;
     }
 }

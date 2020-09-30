@@ -11,7 +11,6 @@ import org.rainbow.beans.entity.SysLog;
 import org.rainbow.mapper.SysLogMapper;
 import org.rainbow.utils.HttpContextUtil;
 import org.rainbow.utils.IPUtil;
-import org.rainbow.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +29,8 @@ public class SysLogAspect {
     private SysLogMapper sysLogMapper;
     @Autowired
     private IPUtil ipUtils;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    // @Autowired
+    // private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private HttpContextUtil httpContextUtils;
 
@@ -85,21 +84,21 @@ public class SysLogAspect {
      * @return
      * @throws Throwable
      */
-    @Around("execution(* org.rainbow.controller.AdminController.login(..))")
-    public Object controllerAround(ProceedingJoinPoint point) throws Throwable {
-        long beginTime = System.currentTimeMillis();
-        // 执行方法
-        Object result = point.proceed();
-        // 执行时长(毫秒)
-        long time = System.currentTimeMillis() - beginTime;
-        // 保存日志
-        try {
-            saveSysLog(time);
-        } catch (Exception e) {
-            log.error("保存日志出现问题，异常为{}", e.getMessage());
-        }
-        return result;
-    }
+    // @Around("execution(* org.rainbow.controller.AdminController.login(..))")
+    // public Object controllerAround(ProceedingJoinPoint point) throws Throwable {
+    //     long beginTime = System.currentTimeMillis();
+    //     // 执行方法
+    //     Object result = point.proceed();
+    //     // 执行时长(毫秒)
+    //     long time = System.currentTimeMillis() - beginTime;
+    //     // 保存日志
+    //     try {
+    //         saveSysLog(time);
+    //     } catch (Exception e) {
+    //         log.error("保存日志出现问题，异常为{}", e.getMessage());
+    //     }
+    //     return result;
+    // }
 
     /**
      * 将日志持久化
@@ -119,7 +118,7 @@ public class SysLogAspect {
         sysLog.setLoginIp(ipUtils.getIpAddr(request));
         sysLog.setLoginBrowser(browser.toString());
         sysLog.setLoginOs(os.toString());
-        sysLog.setLoginName(jwtTokenUtil.getUserNameFromToken(request.getHeader("Authorization")));
+        // sysLog.setLoginName(jwtTokenUtil.getUserNameFromToken(request.getHeader("Authorization")));
         sysLog.setResponseTime(time);
         sysLogMapper.insert(sysLog);
     }

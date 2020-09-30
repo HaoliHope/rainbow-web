@@ -11,32 +11,24 @@ spring:
   mvc:
     format:
       date-time: yyyy-MM-dd
-  boot:
-    admin:
-      client:
-        url: http://ENC(qvo9Fu8+aKZM6oL5L7HeMvJmF9Z5iJfbHUhdsMBxLVCNUDi06nwayc8/45xg1oTt):8080/rainbow-actuator
-        username: ENC(cL0BKl6Ey6X0jfC88sQcACs6JKNXKCeSpsABv2ur9Yy0kloRSPa16K4BMesQKXFS)
-        password: ENC(F890hnHIv8YmxJkQQ/S4KzRo2wfShJH+9YNXGyED8YjOuoHbVDyBm1mzUvhoW7Cs)
   servlet:
     multipart:
       enabled: true # 开启文件上传
       max-file-size: 10MB # 限制最大文件
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
-
-# 自定义jwt key
-jwt:
-  tokenHeader: Authorization #JWT存储的请求头
-  secret: mySecret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24)
-  tokenHead: Bearer  #JWT负载中拿到开头
+  # sa-token配置
+  sa-token:
+    # token名称（同时也是cookie名称）
+    token-name: Authorization
+    # token有效期，单位s 默认30天
+    timeout: 2592000
+    # 在多人登录同一账号时，是否共享会话（为true时共用一个，为false时新登录挤掉旧登录）
+    is-share: false
+    # 是否在cookie读取不到token时，继续从请求header里继续尝试读取
+    is-read-head: true
+    #  是否在header读取不到token时，继续从请求题参数里继续尝试读取
+    is-read-body: true
+    # 是否在初始化配置时打印版本字符画
+    is-v: true
 
 # 文件管理系统
 minio:
