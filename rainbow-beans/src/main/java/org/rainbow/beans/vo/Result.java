@@ -40,6 +40,15 @@ public class Result {
     }
 
     /**
+     * 需要返回数据的成功
+     *
+     * @return
+     */
+    public static final Result success(String message) {
+        return new Result(true, "0", System.currentTimeMillis(), message, null);
+    }
+
+    /**
      * 不需要返回数据的成功
      *
      * @return

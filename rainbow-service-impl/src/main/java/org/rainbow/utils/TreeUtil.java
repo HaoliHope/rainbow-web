@@ -1,6 +1,6 @@
 package org.rainbow.utils;
 
-import org.rainbow.beans.entity.SysMenu;
+import org.rainbow.beans.system.SysMenu;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

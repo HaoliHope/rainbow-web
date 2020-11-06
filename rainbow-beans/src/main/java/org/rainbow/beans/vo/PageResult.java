@@ -1,5 +1,6 @@
 package org.rainbow.beans.vo;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,9 @@ public class PageResult {
     private Object data;
 
     @ApiModelProperty("总条数")
-    private int totalCount;
+    private Long totalCount;
 
-    public static final PageResult success(Object data,int totalCount) {
-        return new PageResult(true, System.currentTimeMillis(), "操作成功", data,totalCount);
+    public static final PageResult success(Page page) {
+        return new PageResult(true, System.currentTimeMillis(), "操作成功", page.getRecords(), page.getSize());
     }
 }

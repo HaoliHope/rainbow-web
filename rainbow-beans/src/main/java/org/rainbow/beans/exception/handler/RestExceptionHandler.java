@@ -29,13 +29,13 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public Result businessExceptionHandler(String messageCode, String detailMessage) {
-        log.error("BusinessException,exception:{}", detailMessage);
+        log.error("业务异常:{}", detailMessage);
         return Result.error(messageCode, detailMessage);
     }
 
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e) {
-        log.error("出现异常", e.getMessage());
+        log.error("系统异常:{}", e.getMessage());
         return Result.error(BaseResponseCode.ERROR);
     }
 

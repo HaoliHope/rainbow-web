@@ -1,6 +1,8 @@
 package org.rainbow.beans.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.rainbow.beans.exception.code.BaseResponseCode;
 
 /**
@@ -8,6 +10,8 @@ import org.rainbow.beans.exception.code.BaseResponseCode;
  * @Date 2020/9/4 13:43
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BusinessException extends RuntimeException {
     /**
      * 异常编号
@@ -19,12 +23,10 @@ public class BusinessException extends RuntimeException {
      */
     private String detailMessage;
 
-
-
-
     public BusinessException(BaseResponseCode baseResponseCode) {
         super();
         this.messageCode = baseResponseCode.getCode();
         this.detailMessage = baseResponseCode.getMsg();
     }
+
 }

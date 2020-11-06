@@ -30,19 +30,13 @@ spring:
     # 是否在初始化配置时打印版本字符画
     is-v: true
 
-# 文件管理系统
-minio:
-  url: http://ENC(qvo9Fu8+aKZM6oL5L7HeMvJmF9Z5iJfbHUhdsMBxLVCNUDi06nwayc8/45xg1oTt):9090 # minio 服务地址
-  accessKey: ENC(WHazqLRMdBqVPAGvi6LtaN43f+04tnHGhILxjDw5BCkX1TIkMpixjwtxOPM54/uW) # 账号
-  secretKey: ENC(WHazqLRMdBqVPAGvi6LtaN43f+04tnHGhILxjDw5BCkX1TIkMpixjwtxOPM54/uW) # 密码
-  bucketName: ${spring.application.name} # 桶名称
 
-# 验证码设置
-aj:
-  captcha:
-    type: default
-    water-mark: &#114;&#97;&#105;&#110;&#98;&#111;&#119;&#45;&#119;&#101;&#98
-    jigsaw: classpath:images/jigsaw
-    pic-click: classpath:images/pic-click
-    interference-options: 1
-    cache-type: redis
+mybatis-plus:
+  # 检查mapper是否存在
+  check-config-location: true
+  # 指定mapper文件的位置
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    call-setters-on-nulls: true
